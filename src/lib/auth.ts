@@ -5,7 +5,7 @@ const secretKey = "SECRET";
 const key = new TextEncoder().encode(secretKey);
 
 export async function encrypt(payload: any) {
-  return await new SignJWT(payload).setProtectedHeader({ alg: "HS256" }).setIssuedAt().setExpirationTime("10 sec from now").sign(key);
+  return await new SignJWT(payload).setProtectedHeader({ alg: "HS256" }).setIssuedAt().sign(key);
 }
 
 export async function decrypt(input: string): Promise<any> {

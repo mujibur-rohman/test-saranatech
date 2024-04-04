@@ -10,8 +10,8 @@ const axiosConfig = axios.create({
 axiosConfig.interceptors.request.use(
   async function (config) {
     const session = await getSession();
-    if (session?.token) {
-      config.headers.Authorization = "Bearer " + session?.token;
+    if (session?.data?.token) {
+      config.headers.Authorization = "Bearer " + session?.data?.token;
     }
     return config;
   },
