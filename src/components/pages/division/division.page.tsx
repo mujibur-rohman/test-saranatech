@@ -55,7 +55,7 @@ function HomePage() {
               <Paginate
                 currentPage={currentPage}
                 handlePageChange={handlePageChange}
-                totalPages={(division?.meta.total as number) / (division?.meta.per_page as number)}
+                totalPages={Math.ceil((division?.meta.total as number) / (division?.meta.per_page as number))}
                 visiblePage={3}
               />
             </div>

@@ -9,6 +9,10 @@ const DivisionService = {
     });
     return response.data;
   },
+  create: async (payload: any) => {
+    const response = await axiosConfig.post("/division", payload);
+    return response.data;
+  },
 };
 
 export default DivisionService;
