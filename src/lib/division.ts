@@ -2,6 +2,7 @@ export type DivisionType = {
   id: number;
   name: string;
   division: DivisionType[] | null;
+  sub?: DivisionType[];
 };
 
 export function updateNameById(data: DivisionType[], targetId: number, newName: string) {

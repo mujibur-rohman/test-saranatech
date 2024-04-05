@@ -15,6 +15,7 @@ function Navbar() {
           await logout();
           router.replace("/auth");
         }}
+        variant="destructive"
       >
         Logout
       </Button>

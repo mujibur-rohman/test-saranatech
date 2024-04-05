@@ -37,7 +37,6 @@ function AddDivision() {
 
   const handleNameChange = (id: number, newName: string) => {
     const updatedData = updateNameById(divisions, id, newName);
-    console.log(updatedData);
     setDivisions(updatedData);
   };
 
@@ -59,7 +58,9 @@ function AddDivision() {
     <div className="px-20 space-y-5">
       <h1 className="mt-10 text-xl font-semibold flex justify-between">
         <span>Create Division</span>
-        <Button onClick={save}>Save</Button>
+        <Button onClick={save} disabled={isLoading}>
+          {!isLoading ? "Save" : "Loading.."}
+        </Button>
       </h1>
       <div className="border-t border-l pl-3 pt-5 space-y-2">
         {divisions.map((div, i) => (

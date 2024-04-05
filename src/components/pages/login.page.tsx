@@ -33,7 +33,6 @@ function LoginPage() {
       toast.success("Login Berhasil");
       router.replace("/");
     } catch (error: any) {
-      console.log(error);
       errorResponse(error);
     }
   }
