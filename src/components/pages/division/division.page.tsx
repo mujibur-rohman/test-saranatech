@@ -1,7 +1,7 @@
 "use client";
+import React from "react";
 import DivisionService from "@/services/division.service";
 import { useQuery } from "@tanstack/react-query";
-import React, { useState } from "react";
 import Loading from "../../ui/loading";
 import ErrorRender from "../../ui/error";
 import { DataTable } from "../../ui/data-table";
