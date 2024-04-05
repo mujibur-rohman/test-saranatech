@@ -3,7 +3,7 @@ import { Button } from "./button";
 import { QueryObserverResult, RefetchOptions } from "@tanstack/react-query";
 import PaginationInterface from "@/types/pagination.types";
 
-function ErrorRender({ refetch }: { refetch: (options?: RefetchOptions | undefined) => Promise<QueryObserverResult<PaginationInterface<any>, Error>> }) {
+function ErrorRender({ refetch }: { refetch: (options?: RefetchOptions | undefined) => Promise<QueryObserverResult<any, Error>> }) {
   return (
     <div className="w-full flex justify-center">
       <div className="flex flex-col items-center gap-2">

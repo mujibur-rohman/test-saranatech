@@ -46,7 +46,7 @@ function AddDivision() {
       const payload = managePayload(divisions);
       await DivisionService.create(payload);
       toast.success("Berhasil membuat divisi");
-      router.push("/");
+      router.push("/divisi");
     } catch (error: any) {
       errorResponse(error);
     } finally {

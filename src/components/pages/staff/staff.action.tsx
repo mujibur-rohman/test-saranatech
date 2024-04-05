@@ -3,23 +3,22 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import errorResponse from "@/lib/error-response";
-import DivisionService from "@/services/division.service";
-import Division from "@/types/division.types";
 import { Edit2Icon, EyeIcon, Loader2Icon, MoreHorizontalIcon, TrashIcon } from "lucide-react";
 import React, { useState } from "react";
 import { toast } from "sonner";
-import DetailDivision from "./detail-division";
-import { Input } from "@/components/ui/input";
 import { useQueryClient } from "@tanstack/react-query";
+import Staff from "@/types/staff.types";
+import StaffService from "@/services/staff.service";
+import { useRouter } from "next/navigation";
+import DetailStaff from "./detail-staff";
 
-function ActionDivision({ divisions }: { divisions: Division }) {
+function ActionStaff({ staff }: { staff: Staff }) {
   const [isOpenDialog, setOpenDialog] = useState(false);
-  const [editValue, setEditValue] = useState(divisions.name);
   const [isLoadingDelete, setIsLoadingDelete] = useState(false);
-  const [isLoadingUpdate, setIsLoadingUpdate] = useState(false);
   const [typeAction, setTypeAction] = useState<"edit" | "delete" | "detail" | null>(null);
 
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   const openChangeWrapper = (value: boolean) => {
     setOpenDialog(value);
@@ -28,7 +27,7 @@ function ActionDivision({ divisions }: { divisions: Division }) {
   const handleDelete = async () => {
     try {
       setIsLoadingDelete(true);
-      await DivisionService.delete(divisions.id);
+      await StaffService.delete(staff.id);
       toast.success("Berhasil Dihapus");
       queryClient.invalidateQueries();
       setOpenDialog(false);
@@ -36,22 +35,6 @@ function ActionDivision({ divisions }: { divisions: Division }) {
       errorResponse(error);
     } finally {
       setIsLoadingDelete(false);
-    }
-  };
-
-  const handleUpdate = async () => {
-    try {
-      if (editValue) {
-        setIsLoadingUpdate(true);
-        await DivisionService.update(divisions.id, { name: editValue });
-        await queryClient.invalidateQueries({ queryKey: ["division"] });
-        toast.success("Berhasil Diupdate");
-        setOpenDialog(false);
-      }
-    } catch (error: any) {
-      errorResponse(error);
-    } finally {
-      setIsLoadingUpdate(false);
     }
   };
 
@@ -64,9 +47,7 @@ function ActionDivision({ divisions }: { divisions: Division }) {
               <DialogTitle>Detail</DialogTitle>
             </DialogHeader>
             <div className="flex flex-col justify-between">
-              <ScrollArea className="max-h-56 flex flex-col gap-4 rounded-md mt-3">
-                <DetailDivision idDivision={divisions.id} />
-              </ScrollArea>
+              <DetailStaff staffId={staff.id} />
             </div>
           </>
         );
@@ -83,28 +64,6 @@ function ActionDivision({ divisions }: { divisions: Division }) {
               </Button>
               <Button disabled={isLoadingDelete} onClick={handleDelete} variant="destructive" size="sm">
                 {isLoadingDelete ? <Loader2Icon className="animate-spin" /> : "Yakin"}
-              </Button>
-            </DialogFooter>
-          </>
-        );
-      case "edit":
-        return (
-          <>
-            <DialogHeader>
-              <DialogTitle>Ubah Divisi</DialogTitle>
-            </DialogHeader>
-            <Input
-              value={editValue}
-              onChange={(e) => {
-                setEditValue(e.target.value);
-              }}
-            />
-            <DialogFooter className="flex flex-col md:flex-row gap-3 md:gap-0">
-              <Button variant="secondary" size="sm" onClick={() => setOpenDialog(false)}>
-                Batal
-              </Button>
-              <Button disabled={isLoadingUpdate} onClick={handleUpdate} size="sm">
-                {isLoadingUpdate ? <Loader2Icon className="animate-spin" /> : "Simpan"}
               </Button>
             </DialogFooter>
           </>
@@ -126,8 +85,7 @@ function ActionDivision({ divisions }: { divisions: Division }) {
         <DropdownMenuContent align="end">
           <DropdownMenuItem
             onClick={() => {
-              setOpenDialog(true);
-              setTypeAction("edit");
+              router.push(`/staff/edit/${staff.id}`);
             }}
             className="flex items-center gap-2 cursor-pointer"
           >
@@ -163,4 +121,4 @@ function ActionDivision({ divisions }: { divisions: Division }) {
   );
 }
 
-export default ActionDivision;
+export default ActionStaff;
