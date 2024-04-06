@@ -31,7 +31,7 @@ function LoginPage() {
       const data = await AuthService.login(values);
       login(data.data);
       toast.success("Login Berhasil");
-      router.replace("/");
+      router.push("/");
     } catch (error: any) {
       errorResponse(error);
     }
