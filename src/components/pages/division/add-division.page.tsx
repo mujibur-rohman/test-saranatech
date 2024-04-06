@@ -42,11 +42,13 @@ function AddDivision() {
 
   const save = async () => {
     try {
-      setIsLoading(true);
-      const payload = managePayload(divisions);
-      await DivisionService.create(payload);
-      toast.success("Berhasil membuat divisi");
-      router.push("/divisi");
+      if (divisions[0].name) {
+        setIsLoading(true);
+        const payload = managePayload(divisions);
+        await DivisionService.create(payload);
+        toast.success("Berhasil membuat divisi");
+        router.push("/divisi");
+      }
     } catch (error: any) {
       errorResponse(error);
     } finally {
